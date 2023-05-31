@@ -25,16 +25,13 @@ function DanhSachNhanVien() {
             this.mangNV.splice(index,1)
         }
     };
-    this.capNhat = function(sv){
+    this.capNhat = function(nv){
         // tìm sv cần cập nhật 
-        var indexFind = this.timIndex(sv.maSV);
+        var indexFind = this.timIndex(nv.idNV);
         if (indexFind > -1 ) {
             
-            // tìm thấy mới cập nhật 
-            // sv: chứa thông tin mới
-            // gán dữ liệu mới vào vị trí của sv cần cập nhật
-            dssv.mangSV[indexFind] = sv;
-            return true;//đã cập nhật
+            dsnv.mangNV[indexFind] = nv;
+            return true;
         } else {
             return false;
         }

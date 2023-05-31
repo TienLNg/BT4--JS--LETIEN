@@ -9,11 +9,11 @@ function setLocalStorage() {
 }
 
 function getLocalstorage() {
-    //getItem => return JSON (kiểu dữ liệu lưu ở DB backend)
+
     var dataLocal = JSON.parse(localStorage.getItem("DSNV"));
-    // console.log(dataLocal);
+    
     if (dataLocal !== null) {
-        //có dữ liệu
+        
         hienThiTable(dataLocal);
         dsnv.mangNV = dataLocal;
     }
@@ -41,20 +41,27 @@ function themNhanVien() {
     // ID
     isValid &= validation.checkEmpty(id,"tbTKNV","Mã nhân viên không được để trống!!!") && validation.checkEmpty(id,"tbTKNV","Tài khoản tối đa 4-6 số & không được trùng", dsnv.mangNV);
 
-    // // tên
-    // isValid &= validation.checkEmpty(ten,"spanTenSV","Tên sinh viên không được để trống") && validation.checkName(ten,"spanTenSV","Tên sinh viên chỉ được chứa ký tự chữ");
+    // tên
+    isValid &= validation.checkEmpty(ten,"tbTen","Tên không được để trống") && validation.checkName(ten,"tbTen","Tên chỉ được chứa ký tự chữ");
 
-    // // email: kiểm tra định dạng email 
-    // isValid &= validation.checkEmail(email,"spanEmailSV","Email chưa đúng định dạng");
+    // email
+    isValid &= validation.checkEmpty(email,"tbEmail","Email không được để trống") && validation.checkEmail(email,"tbEmail","Email chưa đúng định dạng");
 
-    // // phone: kiểm tra định dạng sđt
-    // isValid &= validation.checkPhone(sdt,"spanPhone","Số điện thoại chưa đúng định dạng");
+    // password
+    isValid &= validation.checkEmpty(password,"tbMatKhau","Mật khẩu không được để trống") && validation.checkPassword(password,"tbMatKhau","Mật khẩu phải chứa 6 - 8 ký tự (ít nhất 1 ký tự số, 1 ký tự in hoa, 1 ký tự đặc biệt)");
 
-    // // score: kiểm tra định dạng điểm
-    // isValid &= validation.checkScore(RL,"spanRenluyen","Điểm phải từ 0 đến 10");
-    // isValid &= validation.checkScore(toan,"spanToan","Điểm phải từ 0 đến 10");
-    // isValid &= validation.checkScore(ly,"spanLy","Điểm phải từ 0 đến 10");
-    // isValid &= validation.checkScore(hoa,"spanHoa","Điểm phải từ 0 đến 10");
+    // Ngày làm
+    isValid &= validation.checkEmpty(ngaylam,"tbNgay","Ngày không được để trống") && validation.checkDate(ngaylam,"tbNgay","Ngày chưa đúng định dạng");
+
+    // lương cb
+    isValid &= validation.checkEmpty(luong,"tbLuongCB","Vui lòng điền lương vào") && validation.checkLuong(luong,"tbLuongCB","Lương CB từ 1.000.000 - 20.000.000");
+
+    // chức vụ
+    isValid &= validation.checkEmpty(chuc,"tbChucVu","Chức vụ không được để trống") ;
+
+    //số giờ
+    isValid &= validation.checkEmpty(giolam,"tbGiolam","Số giờ làm của bạn là bao nhiêu?") && validation.checkTime(giolam,"tbGiolam","Số giờ làm trong tháng từ 80 - 200 giờ");
+    
     
 
     if (isValid) {
@@ -67,7 +74,7 @@ function themNhanVien() {
     dsnv.themNV(nv);
 
     setLocalStorage();
-    hienThiTable(dsnv.mangSV);
+    hienThiTable(dsnv.mangNV);
     }
    
 }
@@ -116,49 +123,49 @@ function xoaSinhVien(id) {
 
 
 function xemThongTin(id) {
-    var indexFind = dssv.timIndex(id);
+    var indexFind = dsnv.timIndex(id);
     if (indexFind > -1) {
-        // tìm thấy vị trí của sv 
-        console.log(dssv.mangSV[indexFind]);
-        var svFind = dssv.mangSV[indexFind]
-        document.getElementById("txtMaSV").value = svFind.maSV;
-        document.getElementById("txtMaSV").disabled = true;//ngăn người dùng sửa mã
-        document.getElementById("txtTenSV").value = svFind.tenSV;
-        document.getElementById("txtEmail").value = svFind.email;
-        document.getElementById("loaiSV").value = svFind.loai;
-        document.getElementById("txtPhone").value = svFind.sdt;
-        document.getElementById("txtDiemRenluyen").value = svFind.diemRL;
-        document.getElementById("txtDiemToan").value = svFind.diemToan;
-        document.getElementById("txtDiemLy").value = svFind.diemLy;
-        document.getElementById("txtDiemHoa").value = svFind.diemHoa;
+         
+        console.log(dsnv.mangNV[indexFind]);
+        var nvFind = dsnv.mangNV[indexFind]
+
+        document.getElementById("tknv").value = nvFind.idNV;
+        document.getElementById("tknv").disabled = true;
+
+        document.getElementById("name").value = nvFind.tenNV;
+        document.getElementById("email").value = nvFind.email;
+        document.getElementById("password").value = nvFind.pass;
+        document.getElementById("datepicker").value = nvFind.ngaylam;
+        document.getElementById("luongCB").value = nvFind.luong;
+        document.getElementById("chucvu").value = nvFind.chucvu;
+        document.getElementById("gioLam").value = nvFind.giolam;
+
     }
 }
 
 
-function capNhatSV() {
-    // lấy dữ liệu từ form 
-    var ma = document.getElementById("txtMaSV").value;
-    var ten = document.getElementById("txtTenSV").value;
-    var email = document.getElementById("txtEmail").value;
-    var loai = document.getElementById("loaiSV").value;
-    var sdt = document.getElementById("txtPhone").value;
-    var RL = document.getElementById("txtDiemRenluyen").value;
-    var toan = document.getElementById("txtDiemToan").value;
-    var ly = document.getElementById("txtDiemLy").value;
-    var hoa = document.getElementById("txtDiemHoa").value;
+function capNhatNV() {
+    var id = document.getElementById("tknv").value;
+    var ten = document.getElementById("name").value;
+    var email = document.getElementById("email").value;
+    var password = document.getElementById("password").value;
+    var ngaylam = document.getElementById("datepicker").value;
+    var luong = document.getElementById("luongCB").value;
+    var chuc = document.getElementById("chucvu").value;
+    var giolam = document.getElementById("gioLam").value;
 
-    console.log(ma, ten, email, loai, sdt, hoa, ly, toan, RL);
+    // console.log(id,ten,email,password,ngaylam,luong,chuc,giolam);
 
-    // tạo đối tượng sinh viên
-    // instance : thể hiện của lớp đối tượng 
-    var sv = new SinhVien(ma, ten, email, loai, sdt, Number(RL), Number(ly), Number(hoa), Number(toan));
-    sv.tinhDTB();
-    console.log(sv);
 
-    var result = dssv.capNhat(sv);
+    var nv = new nhanVien(id,ten,email,password,ngaylam,Number(luong),chuc,Number(giolam));
+
+    // nv.tinhtongluong();
+    console.log(nv);
+
+    var result = dsnv.capNhat(nv);
     if (result) {
         setLocalStorage();
-        hienThiTable(dssv.mangSV);
+        hienThiTable(dsnv.mangNV);
         resetForm();
     } else {
         alert("Cập nhật thất bại!!!")
@@ -167,12 +174,9 @@ function capNhatSV() {
 
 }
 
-function resetForm() {
-    document.getElementById("txtMaSV").disabled = false;
-    document.getElementById("formQLSV").reset();
-    // nếu ko có thẻ form 
-    // document.getElementById("txtMaSV").disabled = false;
-
+function resetForm() { 
+    document.getElementById("tknv").disabled = false;
+    document.getElementById("formQLNV").reset();
 }
 
 // document.getElementById("txtSearch").onkeyup = function () {

@@ -6,20 +6,18 @@ function Validation() {
             // thông báo lỗi 
             document.getElementById(spanID).innerHTML = message;
             document.getElementById(spanID).style.display = "block";
-            // trả kết quả false
+           
             return false;
         }
         document.getElementById(spanID).innerHTML = "";
         document.getElementById(spanID).style.display = "none";
-        // trả kết quả true
+        
         return true;
     }
-    this.checkID = function (value, spanID, message, mangSV) {
-        // some(): duyệt mảng, kiểm tra theo điều kiện => return true/false
-        // sv: từng sinh viên trong mảng
-        var isExist = mangSV.some(function (sv, index) {
+    this.checkID = function (value, spanID, message, mangNV) {
+        var isExist = mangNV.some(function (nv, index) {
             // return biểu thức so sánh 
-            return sv.maSV === value;
+            return nv.idNV === value;
         });
         if (isExist) {
             //? chưa hợp lệ 
@@ -65,8 +63,8 @@ function Validation() {
         return false;
     }
 
-    this.checkPhone = function(value,spanID,message){
-        pattern =  /^[0-9]+$/;
+    this.checkPassword = function(value,spanID,message){
+        pattern =  /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{6,8}$/;
         if(value.match(pattern) && value.length >= 9  && value.length <= 10 ) {
             document.getElementById(spanID).innerHTML = "";
             document.getElementById(spanID).style.display = "none";
@@ -77,9 +75,37 @@ function Validation() {
         return false;
     }
 
-    this.checkScore = function(value,spanID,message){
-        pattern =  /^(\d{1,2}(\.\d{1,2})?)$/;
-        if(value.match(pattern) && value >= 0 && value <=10 ) {
+    this.checkDate = function(value,spanID,message){
+        pattern =  /^(0?[1-9]|1[0-2])[\/](0?[1-9]|[12]\d|3[01])[\/](19|20)\d{2}$/;
+        if(value.match(pattern)) {
+            // hợp lệ
+            document.getElementById(spanID).innerHTML = "";
+            document.getElementById(spanID).style.display = "none";
+        return true;
+        }
+            // chưa hợp lệ
+            document.getElementById(spanID).innerHTML = message;
+            document.getElementById(spanID).style.display = "block";
+        return false;
+    }
+
+    this.checkLuong = function(value,spanID,message){
+        pattern =  /^[0-9]+$/;
+        if(value.match(pattern) && value >= 1000000 && value <= 20000000 ) {
+            // hợp lệ
+            document.getElementById(spanID).innerHTML = "";
+            document.getElementById(spanID).style.display = "none";
+        return true;
+        }
+            // chưa hợp lệ
+            document.getElementById(spanID).innerHTML = message;
+            document.getElementById(spanID).style.display = "block";
+        return false;
+    }
+
+    this.checkTime = function(value,spanID,message){
+        pattern =  /^[0-9]+$/;
+        if(value.match(pattern) && value >= 80 && value <=200 ) {
             // hợp lệ
             document.getElementById(spanID).innerHTML = "";
             document.getElementById(spanID).style.display = "none";

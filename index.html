@@ -187,7 +187,7 @@
 				<!-- Modal body -->
 				<div class="modal-body">
 
-					<form role="form">
+					<form role="form" id="formQLNV">
 
 						<div class="form-group">
 							<div class="input-group">
@@ -289,7 +289,8 @@
 				<!-- Modal footer -->
 				<div class="modal-footer" id="modal-footer">
 					<button id="btnThemNV" onclick="themNhanVien()" type="button" class="btn btn-success">Thêm người dùng</button>
-					<button id="btnCapNhat" type="button" class="btn btn-success">Cập nhật</button>
+					<button id="btnCapNhat" onclick="capNhatNV()" type="button" class="btn btn-success">Cập nhật</button>
+					<button id="btnCapNhat" onclick="resetForm()" type="button" class="btn btn-block">Reset</button>
 					<button id="btnDong" type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
 				</div>
 
