@@ -39,7 +39,7 @@ function themNhanVien() {
     var isValid = true; 
 
     // ID
-    isValid &= validation.checkEmpty(id,"tbTKNV","Mã nhân viên không được để trống!!!") && validation.checkEmpty(id,"tbTKNV","Tài khoản tối đa 4-6 số & không được trùng", dsnv.mangNV);
+    isValid &= validation.checkEmpty(id,"tbTKNV","Mã nhân viên không được để trống!!!") && validation.checkID(id,"tbTKNV","Tài khoản tối đa 4-6 số & không được trùng", dsnv.mangNV);
 
     // tên
     isValid &= validation.checkEmpty(ten,"tbTen","Tên không được để trống") && validation.checkName(ten,"tbTen","Tên chỉ được chứa ký tự chữ");
@@ -179,8 +179,22 @@ function resetForm() {
     document.getElementById("formQLNV").reset();
 }
 
-// document.getElementById("txtSearch").onkeyup = function () {
-//     var tuTim = document.getElementById("txtSearch").value;
-//     var mangTK = dssv.timKiemTheoTen(tuTim);
-//     hienThiTable(mangTK);
-// }
+document.getElementById("btnSearch").onkeyup = function () {
+    var tuTim = document.getElementById("btnSearch").value;
+    var mangTK = dssv.timKiemTheoTen(tuTim);
+    hienThiTable(mangTK);
+}
+
+//xét giờ làm
+function xetGioLam(giolam){
+
+    if (giolam >= 192) {
+        return "NV Xuất sắc";
+    } else if (176 <= giolam && giolam < 192) {
+        return "NV Giỏi";
+    } else if (160 <= giolam && giolam < 176){
+        return "NV Khá";
+    } else {
+        return "NV Trung Bình";
+    }
+}

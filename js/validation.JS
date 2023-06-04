@@ -65,7 +65,7 @@ function Validation() {
 
     this.checkPassword = function(value,spanID,message){
         pattern =  /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{6,8}$/;
-        if(value.match(pattern) && value.length >= 9  && value.length <= 10 ) {
+        if(value.match(pattern)) {
             document.getElementById(spanID).innerHTML = "";
             document.getElementById(spanID).style.display = "none";
         return true;
